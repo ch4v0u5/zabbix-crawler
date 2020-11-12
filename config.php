@@ -3,8 +3,8 @@ if (!defined("ZABBIX_CRAWLER")) { die;}
 
 /* CONFIG STUFF */
 $DATABASE_HOST = "localhost";
-$DATABASE_USER = "root";
-$DATABASE_PASSWORD = "";
+$DATABASE_USER = "zabbix";
+$DATABASE_PASSWORD = "zabbix";
 $DATABASE_SCHEMA = "zabbix_spider";
 
 //Set this if you want to use a proxy to scanning

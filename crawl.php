@@ -144,9 +144,9 @@ function getWebsiteID($website) {
     
     
     $mysqli_new->query("INSERT INTO `website` (name,url) VALUE ('$name','$website')");
-    echo mysqli_error;
+    //echo 'mysqli_error';
 
-    $wid = mysqli_insert_id;
+    $wid = 'mysqli_insert_id';
     insertPage($wid, '', 'page');
 
     return $wid;
@@ -204,6 +204,7 @@ function clean($value){
 }
 
 function selectURLS($wid, $baseURL, $limit = 30) {
+	mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
 	global $mysqli_new;
     $sql = "SELECT * FROM `page` WHERE website = '$wid' ORDER BY ts_last, ts_first LIMIT $limit";
     $result = $mysqli_new->query($sql);
@@ -284,7 +285,7 @@ function insertLink($parent, $url, $title="", $external=false) {
     $mysqli_new->query($sql);
     //echo $mysqli_new->error;
     
-    $sql = "SELECT COUNT(*) as links, parent FROM `link` WHERE `child` = $aid AND link_title = '$title' ORDER BY `depth`";
+    $sql = "SELECT COUNT(*) as link, parent FROM `link` WHERE `child` = $aid AND link_title = '$title' ORDER BY `depth`";
    
 	$result = $mysqli_new->query($sql);
 if(is_object($result)){
@@ -306,7 +307,7 @@ function scanPage($page) {
     debug("Scanning $url\n");
 
     //Clear old links
-    $sql = "DELETE FROM links WHERE parent = $page[aid]";
+    $sql = "DELETE FROM link WHERE parent = $page[aid]";
     $mysqli_new->query($sql);
 
     $start = microtime(true);
